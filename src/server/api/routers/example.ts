@@ -35,11 +35,11 @@ export const exampleRouter = createTRPCRouter({
   }),
 
   sendMessage: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ value: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const dataAdded = await ctx.prisma.example.create({
         data: {
-          id: input.id,
+          value: input.value,
         },
       });
 
@@ -49,5 +49,30 @@ export const exampleRouter = createTRPCRouter({
       ee.emit("message_sent", allData);
 
       return allData;
+    }),
+
+  deleteMessage: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const dataDeleted = await ctx.prisma.example.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return "Data deleted";
+    }),
+
+  updateMessage: publicProcedure
+    .input(z.object({ id: z.number(), value: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const dataUpdated = await ctx.prisma.example.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          value: input.value,
+        },
+      });
+      return dataUpdated;
     }),
 });
