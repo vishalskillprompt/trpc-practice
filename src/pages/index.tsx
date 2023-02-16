@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 
 import { api } from "../utils/api";
 import { useState } from "react";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const queryCtx = api.useContext();
@@ -24,6 +25,23 @@ const Home: NextPage = () => {
   });
   return (
     <div className="m-8 bg-violet-200">
+      {/* <div className="my-3 flex justify-end">
+        <Link
+          className="w-auto rounded-md bg-violet-700 p-2 text-white"
+          href="/api/auth/login"
+        >
+          Login
+        </Link>
+      </div> */}
+      <div className="my-3 flex justify-end">
+        <Link
+          className="w-auto rounded-md bg-violet-700 p-2 text-white"
+          href="/api/auth/logout"
+        >
+          Logout
+        </Link>
+      </div>
+
       <div>hello world</div>
       <div>{hello.data ? hello.data.greeting : "Loading tRPC query..."}</div>
 
